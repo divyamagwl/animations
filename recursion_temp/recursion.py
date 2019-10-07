@@ -1,5 +1,10 @@
 from manimlib.imports import *
 
+#TextMobject(r"n = 4\\ 4*fac(3)")
+#Rectangle(height = 1, width = 2)
+#ar = Line(start = 0.5*DOWN, end = 0.5*RIGHT+0.5*UP)
+#square = Square(side_length = 2)
+
 class Boxes(Scene):
   def construct(self):
     
@@ -69,16 +74,14 @@ class Boxes(Scene):
     text7.scale(0.7)
     Box7 = VGroup(rectangle7,text7)
     Box7.shift(2.5*RIGHT + 1.5*DOWN)
-    self.play(FadeOut(Box4))
-    self.play(ShowCreation(Box7))
+    self.play(Transform(Box4,Box7))
     self.wait(1)
-    self.play(FadeOut(Box7))
 
     text8 = TextMobject("1")
     text8.shift(2.5*RIGHT + 1.5*DOWN)
     text8.scale(1.5)
     curved6 = CurvedArrow(start_point = 1.4*DOWN + 2.5*RIGHT, end_point = 1.25*RIGHT + 0.1*DOWN)
-    self.play(Write(text8))
+    self.play(Transform(Box4,text8))
     self.play(Transform(curved3,curved6))
     self.wait(1)
 
@@ -87,16 +90,14 @@ class Boxes(Scene):
     text9.scale(0.7)
     Box8 = VGroup(rectangle8,text9)
     Box8.shift(0.1*DOWN)
-    self.play(FadeOut(Box3))
-    self.play(ShowCreation(Box8))
+    self.play(Transform(Box3,Box8))
     self.wait(1)
-    self.play(FadeOut(Box8))
     
     text10 = TextMobject("2")
     text10.shift(0.1*DOWN)
     text10.scale(1.5)
     curved7 = CurvedArrow(start_point = 0.1*UP, end_point = 1.25*LEFT + 1.3*UP)
-    self.play(Write(text10))
+    self.play(Transform(Box3,text10))
     self.play(Transform(curved2,curved7))
     self.wait(1)
 
@@ -105,32 +106,29 @@ class Boxes(Scene):
     text11.scale(0.7)
     Box9 = VGroup(rectangle9,text11)
     Box9.shift(2.5*LEFT + 1.3*UP)
-    self.play(FadeOut(Box2))
-    self.play(ShowCreation(Box9))
+    self.play(Transform(Box2,Box9))
     self.wait(1)
-    self.play(FadeOut(Box9))
     
     text12 = TextMobject("6")
     text12.shift(2.5*LEFT + 1.3*UP)
     text12.scale(1.5)
     curved8 = CurvedArrow(start_point = 2.5*LEFT + 1.5*UP, end_point = 2.7*UP + 3.75*LEFT)
-    self.play(Write(text12))
+    self.play(Transform(Box2,text12))
     self.play(Transform(curved1,curved8))
     self.wait(1)
 
     rectangle10 = Rectangle(height = 1.25, width = 2.5)    
-    text13 = TextMobject(r"n = 4\\ return 4*3")
+    text13 = TextMobject(r"n = 4\\ return 4*6")
     text13.scale(0.7)
     Box10 = VGroup(rectangle10,text13)
     Box10.shift(5*LEFT + 2.7*UP)
-    self.play(FadeOut(Box1))
-    self.play(ShowCreation(Box10))
+    self.play(Transform(Box1,Box10))
     self.wait(1)
-    self.play(FadeOut(Box10))
     
     text14 = TextMobject("24")
     text14.shift(5*LEFT + 2.7*UP)
     text14.scale(1.5)
-    self.play(Write(text14))
+    self.play(Transform(Box1,text14))
     self.wait(1)
+
 
