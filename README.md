@@ -9,4 +9,5 @@ The following are necessary to run the animation:
 <br/>2)Manim
 <br/>3)VLC media player
 <br/><br/>
-But you can don't need to run the code if you just want to watch the animation.
+
+You can either refer the animation directly (.mp4) or can view it's code
