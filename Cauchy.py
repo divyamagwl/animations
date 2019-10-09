@@ -2,14 +2,14 @@ from manimlib.imports import *
 import numpy as np
 
 def get_definition_text():
-    return TextMobject(r"A" ,r"sequence $X = (x_n)$" ,r"of real numbers is said to be a ", r"Cauchy sequence", r"""if\\ for all $\epsilon$  \textgreater 0 there exists N($\epsilon$) belonging to natural numbers such that for all\\ natural numbers $n, m \textgreater$ N($\epsilon$), the terms ($x_n$), ($x_m$) satisfy $| x_n - x_m | \textless \epsilon$.""")
+    return TextMobject(r"A" ,r"sequence $X = (x_n)$" ,r"of real numbers is said to be a ", r"Cauchy sequence", r"""if\\ $\forall$ $\epsilon$  \textgreater 0 $\exists$ N($\epsilon$) $\in$ natural numbers such that $\forall$ natural numbers\\ $n, m \textgreater$ N($\epsilon$), the terms ($x_n$), ($x_m$) satisfy $| x_n - x_m | \textless \epsilon$.""")
 
 def get_custom_definition_text():
     custom_definition = TextMobject(r"The ",
                         r"sequence $20 \frac{(-1)^n}{n} + 4$",
                         r"is said to be a ", r"Cauchy sequence ",
-                        r"if for all arbitary\\ $\epsilon$ value", 
-                        r"there exists an index number after which the",
+                        r"if $\forall$ arbitary $\epsilon$ \\value", 
+                        r"$\exists$ an index number after which the",
                         r"difference between two\\ numbers in the sequence is less than the $\epsilon$ value")
     custom_definition.scale(0.5)
     custom_definition.shift(2.6*RIGHT+3*UP)
@@ -19,11 +19,11 @@ def get_custom_definition_text():
     return custom_definition
 
 def get_distance_text():
-    distance = TextMobject(r"""The distance between $x_n $ and $ x_m $ $\textgreater$  $ N(\epsilon) [x_{11}, x_{12} ...]$ , \\remains inside the given band. \textit{i.e}\\ $| x_n - x_m | \textless 4$ for all $n,m \textgreater N(\epsilon)$""")
+    distance = TextMobject(r"""The distance between $x_n $ and $ x_m $ $\textgreater$  $ N(\epsilon) [x_{11}, x_{12} ...]$ , \\remains inside the given band. \textit{i.e}\\ $| x_n - x_m | \textless 4$ $\forall$ $n,m \textgreater N(\epsilon)$""")
     distance.scale(0.6) 
     distance.shift(2.5*DOWN+1*RIGHT)
     return distance
-
+       
 class IntroText(Scene):
     def construct(self):
         text1 = get_definition_text()
@@ -102,10 +102,10 @@ class PlotFunctions(GraphScene):
         [points[counter].shift(self.graph_origin + counter * (RIGHT * X_TICKS_DISTANCE) +
                                mathfunc(counter) * (UP * Y_TICKS_DISTANCE)) for counter in range(1, len(points))]
 
-        positive_epsilon = DashedLine(start = self.graph_origin, end=4.5*RIGHT, color=DARK_BROWN)
+        positive_epsilon = DashedLine(start = self.graph_origin, end=4.3*RIGHT, color=DARK_BROWN)
         positive_epsilon.shift(Y_TICKS_DISTANCE*(limit + epsilon)*UP)
 
-        negative_epsilon = DashedLine(start=4 * LEFT, end=4.5 * RIGHT, color=DARK_BROWN)
+        negative_epsilon = DashedLine(start = self.graph_origin, end=4.3 * RIGHT, color=DARK_BROWN)
         negative_epsilon.shift(Y_TICKS_DISTANCE * (limit - epsilon) * UP)
 
         epsilon_band = VGroup(positive_epsilon, negative_epsilon)
@@ -133,7 +133,7 @@ class PlotFunctions(GraphScene):
         self.wait(1)
 
 
-        midtext = TextMobject("For all", r"n,m \textgreater $N(\epsilon)$")
+        midtext = TextMobject("""$\\forall$""", r"n,m \textgreater $N(\epsilon)$")
         midtext.set_color_by_tex_to_color_map({r"n,m \textgreater $N(\epsilon)$":PINK})
         midtext.scale(0.6); midtext.shift(2.1*UP+0.6*RIGHT)
         self.play(Write(midtext))
