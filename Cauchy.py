@@ -1,27 +1,33 @@
 from manimlib.imports import *
 import numpy as np
 
+"""- "In a Cauchy sequence, you can take any value for epsilon " epsilon= 0.3, epsilon= 0.002, ...)
+- And no matter how small it is, you'll find an N (highlight N)
+- after which distance between any two points will be < epsilon
+"""
+
+
 def get_definition_text():
     return TextMobject(r"A" ,r"sequence $X = (x_n)$" ,r"of real numbers is said to be a ", r"Cauchy sequence", r"""if\\ $\forall$ $\epsilon$  \textgreater 0 $\exists$ N($\epsilon$) $\in$ natural numbers such that $\forall$ natural numbers\\ $n, m \textgreater$ N($\epsilon$), the terms ($x_n$), ($x_m$) satisfy $| x_n - x_m | \textless \epsilon$.""")
 
 def get_custom_definition_text():
-    custom_definition = TextMobject(r"The ",
+    custom_definition = TextMobject(r"Since $\forall$ $\epsilon$ $\exists$ an index number N($\epsilon$) after which the",
+                        r"difference \\between two numbers in the sequence is less than the $\epsilon$ value")
+    """custom_definition = TextMobject(r"The ",
                         r"sequence $20 \frac{(-1)^n}{n} + 4$",
                         r"is said to be a ", r"Cauchy sequence ",
-                        r"if $\forall$ arbitary $\epsilon$ \\value", 
+                        r"if $\forall$ $\epsilon$ \\", 
                         r"$\exists$ an index number after which the",
-                        r"difference between two\\ numbers in the sequence is less than the $\epsilon$ value")
-    custom_definition.scale(0.5)
+                        r"difference between two\\ numbers in the sequence is less than the $\epsilon$ value")"""
+    custom_definition.scale(0.6)
     custom_definition.shift(2.6*RIGHT+3*UP)
-    custom_definition.set_color_by_tex_to_color_map({
-    r"sequence $20 \frac{(-1)^n}{n} + 4$": YELLOW})
+    #custom_definition.set_color_by_tex_to_color_map({
+    #r"sequence $20 \frac{(-1)^n}{n} + 4$": YELLOW})
 
     return custom_definition
 
 def get_distance_text():
-    distance = TextMobject(r"""The distance between $x_n $ and $ x_m $ $\textgreater$  $ N(\epsilon) [x_{11}, x_{12} ...]$ , \\remains inside the given band. \textit{i.e}\\ $| x_n - x_m | \textless 4$ $\forall$ $n,m \textgreater N(\epsilon)$""")
-    distance.scale(0.6) 
-    distance.shift(2.5*DOWN+1*RIGHT)
+    
     return distance
        
 class IntroText(Scene):
@@ -61,7 +67,6 @@ class ShowEquation(Scene):
         self.play(Write(text), Write(eqn))
         self.wait(2)
 
-
 class PlotFunctions(GraphScene):
     CONFIG = {
         "x_min": -2,
@@ -78,13 +83,6 @@ class PlotFunctions(GraphScene):
         "y_labeled_nums": range(-10,11,2)
     }
 
-    def e_text(self, get_text = 1):
-        if get_text == 1:
-            lim = TextMobject(r"Let us assume the value of $\epsilon$ to be equal to $4$")
-        lim.shift(2*DOWN+1.2*RIGHT)
-        lim.scale(0.7)
-        return lim
-
     def construct(self):
         X_TICKS_DISTANCE = self.x_axis_width / (self.x_max - self.x_min)
         Y_TICKS_DISTANCE = self.y_axis_height / (self.y_max - self.y_min)
@@ -97,6 +95,7 @@ class PlotFunctions(GraphScene):
         equation = TextMobject(r"$20 \frac{(-1)^n}{n} + 4$")
         equation.shift(3.5*RIGHT+3*UP)
         self.play(FadeIn(equation))
+
 
         mathfunc = lambda x: 20*((-1)**x)/x + 4
         [points[counter].shift(self.graph_origin + counter * (RIGHT * X_TICKS_DISTANCE) +
@@ -113,14 +112,15 @@ class PlotFunctions(GraphScene):
         for point in range(1,len(points)):
             self.add(points[point])
             self.wait(0.1)
-        self.wait(2) 
 
-        custom_definition = get_custom_definition_text()
-        self.play(Transform(equation, custom_definition)); self.wait(4)
+        self.wait(1) 
 
-        lim = [self.e_text(i) for i in range(1,2)]
-        self.play(Write(lim[0])); self.wait(2)
-        self.play(Transform(lim[0], epsilon_band))
+        lim = TextMobject(r"Let $\epsilon$ = $4$")
+        lim.shift(2*DOWN+1*RIGHT)
+        lim.scale(0.9)        
+        self.play(Write(lim))
+        self.wait(2)
+        self.play(Transform(lim, epsilon_band))
 
         N_value = TextMobject("$N(\epsilon)$")
         N_value.set_color_by_tex_to_color_map({"$N(\epsilon)$":YELLOW})
@@ -130,12 +130,11 @@ class PlotFunctions(GraphScene):
         N.shift(self.graph_origin + RIGHT*X_TICKS_DISTANCE*n + UP*Y_TICKS_DISTANCE*mathfunc(n))
         self.play(ShowCreation(N))
         self.play(ShowCreation(N_value))
-        self.wait(1)
-
+        self.wait(0.5)
 
         midtext = TextMobject("""$\\forall$""", r"n,m \textgreater $N(\epsilon)$")
         midtext.set_color_by_tex_to_color_map({r"n,m \textgreater $N(\epsilon)$":PINK})
-        midtext.scale(0.6); midtext.shift(2.1*UP+0.6*RIGHT)
+        midtext.scale(0.6); midtext.shift(2.1*UP+0.2*RIGHT)
         self.play(Write(midtext))
 
         more_dots = [ Dot(color = BLUE_A, radius = 0.06) for index in range(11,30)]
@@ -144,31 +143,39 @@ class PlotFunctions(GraphScene):
         for point in range(1,len(more_dots)):
             self.add(more_dots[point])
             self.wait(0.2)
-        self.wait(2)
+        self.wait(0.5)
 
-        distance = get_distance_text()
-        self.play(Transform(midtext, distance))
+        distance1 = TextMobject(r"""Notice that for all points after N""" )
+        distance1.scale(0.7) 
+        distance1.shift(2.3*DOWN+1*RIGHT)
+        self.play(Transform(midtext, distance1))
 
         newdots =  Dot(color = GREEN, radius = 0.065)
-        newdots.shift(self.graph_origin + RIGHT*X_TICKS_DISTANCE*(n+1) + UP*Y_TICKS_DISTANCE*mathfunc(n+1))
+        newdots.shift(self.graph_origin + RIGHT*X_TICKS_DISTANCE*(n+3) + UP*Y_TICKS_DISTANCE*mathfunc(n+3))
         self.play(ShowCreation(newdots))
 
         XN_value = TextMobject("$x_n$")
         XN_value.set_color_by_tex_to_color_map({"$x_n$":GREEN})
-        XN_value.shift(self.graph_origin + RIGHT*X_TICKS_DISTANCE*(n+1) + UP*(Y_TICKS_DISTANCE*mathfunc(n+1)-0.3))
+        XN_value.shift(self.graph_origin + RIGHT*X_TICKS_DISTANCE*(n+3) + UP*(Y_TICKS_DISTANCE*mathfunc(n+3)-0.34))
         XN_value.scale(0.7)
         self.play(ShowCreation(XN_value))
+        #self.wait(0.5)
 
         newdots2 =  Dot(color = GREEN, radius = 0.065)
-        newdots2.shift(self.graph_origin + RIGHT*X_TICKS_DISTANCE*(n+2) + UP*Y_TICKS_DISTANCE*mathfunc(n+2))
+        newdots2.shift(self.graph_origin + RIGHT*X_TICKS_DISTANCE*(n+6) + UP*Y_TICKS_DISTANCE*mathfunc(n+6))
         self.play(ShowCreation(newdots2))
 
         XM_value = TextMobject("$x_m$")
         XM_value.set_color_by_tex_to_color_map({"$x_m$":GREEN})
-        XM_value.shift(self.graph_origin + RIGHT*(X_TICKS_DISTANCE*(n+2)+0.1) + UP*(Y_TICKS_DISTANCE*mathfunc(n+2)+0.3))
+        XM_value.shift(self.graph_origin + RIGHT*(X_TICKS_DISTANCE*(n+6)+0.1) + UP*(Y_TICKS_DISTANCE*mathfunc(n+6)+0.4))
         XM_value.scale(0.7)
         self.play(ShowCreation(XM_value))
-        self.wait(0.5)
+        #self.wait(0.5)
+
+        distance2 = TextMobject(r"""The distance between $x_n$ and $x_m$ remains inside the \\given band. \textit{i.e} $| x_n - x_m | \textless 4$ $\forall$ $n,m \textgreater N(\epsilon)$""")
+        distance2.scale(0.7) 
+        distance2.shift(2.3*DOWN+1*RIGHT)
+        self.play(Transform(midtext,distance2))
 
         band_rectangle = Rectangle(color=GOLD_B, color_opacity=0.2, fill_color=GOLD_B, fill_opacity=0.2, height=Y_TICKS_DISTANCE*4, width=X_TICKS_DISTANCE*30)
         band_rectangle.shift(self.graph_origin+X_TICKS_DISTANCE*RIGHT*15 + Y_TICKS_DISTANCE * UP*4)
@@ -177,13 +184,28 @@ class PlotFunctions(GraphScene):
         self.wait(3)
 
         similar = TextMobject(r"""Similarly this is true for all values of $\epsilon$""")
-        similar.scale(0.6) 
-        similar.shift(3.5*DOWN+1*RIGHT)
+        similar.scale(0.7) 
+        similar.shift(3.3*DOWN+1*RIGHT)
         self.play(Write(similar))
         self.wait(2)
 
+        custom_definition = get_custom_definition_text()
+        self.play(Transform(equation, custom_definition))
+        self.wait(3)
+
         explanation = TextMobject(r"Therefore the sequence is a ", r"Cauchy Sequence")
-        explanation.scale(0.6); explanation.shift(3.5*DOWN+1*RIGHT)
+        explanation.scale(0.7); explanation.shift(3.3*DOWN+1*RIGHT)
         explanation.set_color_by_tex_to_color_map({r"Cauchy Sequence": RED})
         self.play(Transform(similar,explanation))
         self.wait(3)
+
+'''        more_new_dots = [ Dot(color = GREEN, radius = 0.06) for index in range(11,30)]
+        [more_new_dots[counter].shift(self.graph_origin + (counter+11) * (RIGHT * X_TICKS_DISTANCE) + mathfunc(counter+11) * (UP * Y_TICKS_DISTANCE)) for counter in range(1,18)]
+
+        for point in range(1,len(more_new_dots)):
+            self.add(more_new_dots[point])
+            self.wait(0.05)
+            self.play(FadeOut(more_new_dots[point]))
+        self.wait(1)'''
+
+
