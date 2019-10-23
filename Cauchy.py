@@ -1,12 +1,6 @@
 from manimlib.imports import *
 import numpy as np
 
-"""- "In a Cauchy sequence, you can take any value for epsilon " epsilon= 0.3, epsilon= 0.002, ...)
-- And no matter how small it is, you'll find an N (highlight N)
-- after which distance between any two points will be < epsilon
-"""
-
-
 def get_definition_text():
     return TextMobject(r"A" ,r"sequence $X = (x_n)$" ,r"of real numbers is said to be a ", r"Cauchy sequence", r"""if\\ $\forall$ $\epsilon$  \textgreater 0 $\exists$ N($\epsilon$) $\in$ natural numbers such that $\forall$ natural numbers\\ $n, m \textgreater$ N($\epsilon$), the terms ($x_n$), ($x_m$) satisfy $| x_n - x_m | \textless \epsilon$.""")
 
@@ -21,13 +15,10 @@ def get_custom_definition_text():
                         r"difference between two\\ numbers in the sequence is less than the $\epsilon$ value")"""
     custom_definition.scale(0.6)
     custom_definition.shift(2.6*RIGHT+3*UP)
-    #custom_definition.set_color_by_tex_to_color_map({
-    #r"sequence $20 \frac{(-1)^n}{n} + 4$": YELLOW})
 
     return custom_definition
 
-def get_distance_text():
-    
+def get_distance_text():    
     return distance
        
 class IntroText(Scene):
@@ -159,7 +150,6 @@ class PlotFunctions(GraphScene):
         XN_value.shift(self.graph_origin + RIGHT*X_TICKS_DISTANCE*(n+3) + UP*(Y_TICKS_DISTANCE*mathfunc(n+3)-0.34))
         XN_value.scale(0.7)
         self.play(ShowCreation(XN_value))
-        #self.wait(0.5)
 
         newdots2 =  Dot(color = GREEN, radius = 0.065)
         newdots2.shift(self.graph_origin + RIGHT*X_TICKS_DISTANCE*(n+6) + UP*Y_TICKS_DISTANCE*mathfunc(n+6))
@@ -170,7 +160,6 @@ class PlotFunctions(GraphScene):
         XM_value.shift(self.graph_origin + RIGHT*(X_TICKS_DISTANCE*(n+6)+0.1) + UP*(Y_TICKS_DISTANCE*mathfunc(n+6)+0.4))
         XM_value.scale(0.7)
         self.play(ShowCreation(XM_value))
-        #self.wait(0.5)
 
         distance2 = TextMobject(r"""The distance between $x_n$ and $x_m$ remains inside the \\given band. \textit{i.e} $| x_n - x_m | \textless 4$ $\forall$ $n,m \textgreater N(\epsilon)$""")
         distance2.scale(0.7) 
@@ -198,14 +187,4 @@ class PlotFunctions(GraphScene):
         explanation.set_color_by_tex_to_color_map({r"Cauchy Sequence": RED})
         self.play(Transform(similar,explanation))
         self.wait(3)
-
-'''        more_new_dots = [ Dot(color = GREEN, radius = 0.06) for index in range(11,30)]
-        [more_new_dots[counter].shift(self.graph_origin + (counter+11) * (RIGHT * X_TICKS_DISTANCE) + mathfunc(counter+11) * (UP * Y_TICKS_DISTANCE)) for counter in range(1,18)]
-
-        for point in range(1,len(more_new_dots)):
-            self.add(more_new_dots[point])
-            self.wait(0.05)
-            self.play(FadeOut(more_new_dots[point]))
-        self.wait(1)'''
-
 
